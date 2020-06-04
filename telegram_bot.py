@@ -1,10 +1,9 @@
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
-from dotenv import load_dotenv
+import telegram
 import os
 import dialogflow_v2 as dialogflow
 import logging
-from logging.handlers import RotatingFileHandler
-import argparse
+
 
 
 def detect_intent_text(project_id, session_id, text, language_code):
@@ -42,34 +41,20 @@ def main(token, params=None):
 
 
 if __name__ == '__main__':
-    logs_dir = 'logs'
-    os.makedirs(logs_dir, exist_ok=True)
-    logs_path = os.path.join(logs_dir, 'telegram_bot.log')
+    
+    tg_token = os.environ['TELEGRAM_TOKEN']
+    telegram_chat_id = os.environ['TELEGRAM_CHAT_ID']
+    google_application_credentials = os.environ['GOOGLE_APPLICATION_CREDENTIALS']
+    dialogflow_project_id = os.environ['DIALOG_FLOW_PROJECT_ID']
 
-    telegram_logger = logging.getLogger('telegram_logger')
-    logs_handler = RotatingFileHandler(logs_path, maxBytes=1024, backupCount=5)
-    telegram_logger.addHandler(logs_handler)
+    tg_bot = telegram.Bot(token=tg_token)
+    
+    class MyLogsHandler(logging.Handler):
+        def emit(self, record):
+            log_entry = self.format(record)
+            tg_bot.send_message(chat_id=telegram_chat_id, text=log_entry)
 
-    load_dotenv()
-    tg_token = os.getenv('TELEGRAM_TOKEN')
-    google_application_credentials = os.getenv('GOOGLE_APPLICATION_CREDENTIALS')
-    dialogflow_project_id = os.getenv('DIALOG_FLOW_PROJECT_ID')
+    t_logger = logging.getLogger('ChatBot_logger')
+    t_logger.addHandler(MyLogsHandler())
 
-    parser = argparse.ArgumentParser(description='Check project status on devman resource')
-    parser.add_argument('-u', '--socks5_url', help='enter yor proxy server url')
-    parser.add_argument('-l', '--socks5_login', help='enter your login on socks5 server')
-    parser.add_argument('-p', '--socks5_passwd', help='enter your password on socks5 server')
-
-    script_args = parser.parse_args()
-
-    if script_args.socks5_url and script_args.socks5_login and script_args.socks5_passwd:
-        proxy_params = {
-            'proxy_url': f'socks5h://{script_args.socks5_url}', 
-            'urllib3_proxy_kwargs': {
-                'username': script_args.socks5_login,
-                'password': script_args.socks5_passwd
-            }
-        }
-        main(tg_token, params=proxy_params)
-    else:
-        main(tg_token)
+    main(tg_token)

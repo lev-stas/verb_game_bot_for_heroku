@@ -5,7 +5,8 @@ import os
 import random
 import dialogflow_v2 as dialogflow
 import logging
-from logging.handlers import RotatingFileHandler
+import telegram
+
 
 def detect_intent_text(project_id, session_id, text, language_code):
     session_client = dialogflow.SessionsClient()
@@ -28,18 +29,21 @@ def send_message(event, vk_api, project_id):
         )
 
 if __name__ == '__main__':
-    load_dotenv()
-    vk_token = os.getenv('VK_ACCOUNT_ACCESS_TOKEN')
-    google_application_credentials = os.getenv('GOOGLE_APPLICATION_CREDENTIALS')
-    dialogflow_project_id = os.getenv('DIALOG_FLOW_PROJECT_ID')
+    tg_token = os.environ['TELEGRAM_TOKEN']
+    telegram_chat_id = os.environ['TELEGRAM_CHAT_ID']
+    vk_token = os.environ['VK_ACCOUNT_ACCESS_TOKEN']
+    google_application_credentials = os.environ['GOOGLE_APPLICATION_CREDENTIALS']
+    dialogflow_project_id = os.environ['DIALOG_FLOW_PROJECT_ID']
 
-    logs_dir = 'logs'
-    os.makedirs(logs_dir, exist_ok=True)
-    logs_path = os.path.join(logs_dir, 'vk_bot.log')
+    tg_bot = telegram.Bot(token=tg_token)
+    
+    class MyLogsHandler(logging.Handler):
+        def emit(self, record):
+            log_entry = self.format(record)
+            tg_bot.send_message(chat_id=telegram_chat_id, text=log_entry)
 
-    vk_logger = logging.getLogger('vk_logger')
-    logs_handler = RotatingFileHandler(logs_path, maxBytes=1024, backupCount=5)
-    vk_logger.addHandler(logs_handler)
+    t_logger = logging.getLogger('ChatBot_logger')
+    t_logger.addHandler(MyLogsHandler())
 
     vk_session = vk_api.VkApi(token=vk_token)
     vk_api = vk_session.get_api()

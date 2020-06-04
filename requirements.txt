@@ -1,0 +1,5 @@
+python-telegram-bot==12.7
+python-dotenv==0.13.0
+dialogflow==1.0.0
+PySocks==1.7.1
+vk_api==11.8.0

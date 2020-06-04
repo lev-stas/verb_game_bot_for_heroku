@@ -4,7 +4,6 @@ import json
 from dotenv import load_dotenv
 import argparse
 import logging
-from logging.handlers import RotatingFileHandler
 
 
 
@@ -53,13 +52,8 @@ if __name__ == '__main__':
     args = parser.parse_args()
     training_file = args.training_file
 
-    logs_dir = 'logs'
-    os.makedirs(logs_dir, exist_ok=True)
-    logs_path = os.path.join(logs_dir, 'dialogflow.log')
 
-    dialogflow_logger = logging.getLogger('dialogflow_logger')
-    logs_handler = RotatingFileHandler(logs_path, maxBytes=1024, backupCount=5)
-    dialogflow_logger.addHandler(logs_handler)
+    logger = logging.getLogger('ChatBot_logger')
     
     learn_intent(training_file, dialogflow_project_id)
     
