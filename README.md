@@ -61,7 +61,7 @@ To create and train DilofFlow intent run `dialogflow_learning.py` script with pa
 python dialogflow_learning.py phrases.txt
 ```
 ##### Chat bot deploy
-We will use heroku to deploy our bots. First of all, you need an account on [heroku] (https://www.heroku.com/). Create a new app and push the repository to this project. For more information, you may read in [official documentation] (https://devcenter.heroku.com/). Before you start using your bots, you should scpecify cofig vars for your aplllication: `DIALOG_FLOW_PROJECT_ID`, `TELEGRAM_CHAT_ID`, `TELEGRAM_TOKEN`, `VK_ACCOUNT_ACCESS_TOKEN`, and set `GOOFLE_APPLICATION_CREDENTIALS` for your dialogflow project (you may read about how to do that on [stackoverflow] (https://stackoverflow.com/questions/47446480/how-to-use-google-api-credentials-json-on-heroku) and on [github] (https://github.com/gerywahyunugraha/heroku-google-application-credentials-buildpack)). 
+We will use heroku to deploy our bots. First of all, you need an account on [heroku](https://www.heroku.com/). Create a new app and push the repository to this project. For more information, you may read in [official documentation](https://devcenter.heroku.com/). Before you start using your bots, you should scpecify cofig vars for your aplllication: `DIALOG_FLOW_PROJECT_ID`, `TELEGRAM_CHAT_ID`, `TELEGRAM_TOKEN`, `VK_ACCOUNT_ACCESS_TOKEN`, and set `GOOFLE_APPLICATION_CREDENTIALS` for your dialogflow project (you may read about how to do that on [stackoverflow](https://stackoverflow.com/questions/47446480/how-to-use-google-api-credentials-json-on-heroku) and on [github](https://github.com/gerywahyunugraha/heroku-google-application-credentials-buildpack)). 
 
 After all preparations are ready, run your bots.
 
