@@ -4,6 +4,11 @@ This project creates bots for Telegram and VK for fictional publisher house "Ver
 <img src='demo_gifs/demo_tg_bot.gif' title='demo_tg_bot'/>
 <img src='demo_gifs/demo_vk_bot.gif' title='demo_vk_bot'/>
 
+#### Demo
+You may try to use this bots:
+telegram bot - @stast_devman_talking_bot
+vk bot - xkcd_commics_group
+
 ### Prepare your work environment
 You need Python3 interpreter to use this project. You can check what version or python interpreter typing in your terminal
 ```
