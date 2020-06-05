@@ -1,7 +1,7 @@
 # Verb game chat bots
 This project creates bots for Telegram and VK for fictional publisher house "Verb Game". These bots answer popular questions from authors, who want or already work with publisher house.
 
-<img src='demo_gifs/demo_tg_bot.gif' title='demo_tg_bot'/>
+<a href='https://yadi.sk/i/s913qjMrek0-gw'><img src='https://yadi.sk/i/s913qjMrek0-gw' title='demo_tg_bot'/> </a>
 
 ### Prepare your work environment
 You need Python3 interpreter to use this project. You can check what version or python interpreter typing in your terminal
