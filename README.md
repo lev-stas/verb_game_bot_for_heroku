@@ -7,6 +7,7 @@ This project creates bots for Telegram and VK for fictional publisher house "Ver
 #### Demo
 You may try to use this bots:
 telegram bot - @stast_devman_talking_bot
+
 vk bot - xkcd_commics_group
 
 ### Prepare your work environment
