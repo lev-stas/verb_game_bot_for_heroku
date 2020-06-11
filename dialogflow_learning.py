@@ -13,8 +13,7 @@ def learn_intent(filename, project_id):
     expressions = json.loads(file_content)
     for topic, phrases in expressions.items():
         questions = phrases['questions']
-        answer = []
-        answer.append(phrases['answer'])
+        answer = [phrases['answer']]
         create_intent(project_id, topic, questions, answer)
     
 
