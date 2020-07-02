@@ -1,15 +1,18 @@
-from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
-import telegram
 import os
-import dialogflow_v2 as dialogflow
 import logging
+
+import telegram
+import dialogflow_v2 as dialogflow
+
+from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 from vk_bot import detect_intent_text
 
 
-def start (bot, update):
+def start(bot, update):
     update.message.reply_text('Добро пожаловать в чат "Игры глаголов"')
 
-def reply_message (bot, update):
+
+def reply_message(bot, update):
     users_text = update.message.text
     session_id = update.message.chat['id']
     reply = detect_intent_text(dialogflow_project_id, session_id, users_text, 'ru')
@@ -20,18 +23,20 @@ def reply_message (bot, update):
 
 
 def main(token, params=None):
-    if params:
-        updater = Updater(token, request_kwargs=params)
-    else:
-        updater = Updater(token)
-    dispatcher = updater.dispatcher
+    try:
+        if params:
+            updater = Updater(token, request_kwargs=params)
+        else:
+            updater = Updater(token)
+        dispatcher = updater.dispatcher
 
-    dispatcher.add_handler(CommandHandler('start', start))
-    dispatcher.add_handler(MessageHandler(Filters.text, reply_message))
+        dispatcher.add_handler(CommandHandler('start', start))
+        dispatcher.add_handler(MessageHandler(Filters.text, reply_message))
 
-
-    updater.start_polling()
-    updater.idle()
+        updater.start_polling()
+        updater.idle()
+    except Exception:
+        logger.exception()
 
 
 if __name__ == '__main__':

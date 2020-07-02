@@ -1,10 +1,11 @@
-import dialogflow_v2 as dialogflow
 import os
 import json
-from dotenv import load_dotenv
-import argparse
 import logging
 
+import dialogflow_v2 as dialogflow
+import argparse
+
+from dotenv import load_dotenv
 
 
 def learn_intent(filename, project_id):
@@ -17,11 +18,9 @@ def learn_intent(filename, project_id):
         create_intent(project_id, topic, questions, answer)
     
 
-
 def create_intent(project_id, display_name, training_phrases_parts,
                   message_texts):
     intents_client = dialogflow.IntentsClient()
-
     parent = intents_client.project_agent_path(project_id)
     training_phrases = []
     for training_phrases_part in training_phrases_parts:
@@ -54,7 +53,10 @@ if __name__ == '__main__':
 
     logger = logging.getLogger('ChatBot_logger')
     
-    learn_intent(training_file, dialogflow_project_id)
+    try:
+        learn_intent(training_file, dialogflow_project_id)
+    except Exception:
+        logger.exception()
     
 
 
